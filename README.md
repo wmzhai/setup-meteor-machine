@@ -17,18 +17,15 @@
 
 	$ sudo passwd root
 
-
 设置完以后可以试一下su指令，进入root模式，后面很多操作采用root操作
+
+![](images/add-root.png)
 
 
 3. 配置源并更新
 -------
 
-
 安装以后通过编辑/etc/apt/sources.list配置源
-
-
-
 
 	meteor@ubuntu:~$ sudo gedit /etc/apt/sources.list
 
@@ -64,9 +61,6 @@
 	meteor@ubuntu:~$ sudo apt-get update -y 
 	meteor@ubuntu:~$ sudo apt-get upgrade -y 
 
-
-
-
 4.配置openssh和root的登录
 -------
 
@@ -83,15 +77,16 @@
 然后再进入root用户的home，创建/root/.ssh/  
 最后将客户端的id_rsa.pub内容复制到 /root/.ssh/authorized_keys 内，以达到权限认证目的
 
+![](images/ssh.png)
 
 然后再退出root用户，在重启ssh服务，最后使用root用户连接到本地的ssh里面
 
+![](images/ssh-login.png)
 
 
 
 5. 配置GitHub账户，并clone本项目
 -------
-
 
 首先登陆github，再进入如下界面
 https://github.com/settings/ssh
@@ -99,16 +94,23 @@ https://github.com/settings/ssh
 点击右上角的Add SSH key
 
 
-然后
+然后执行
 
 	meteor@ubuntu:~$ gedit .ssh/id_rsa.pub
 
 复制所有内容，黏贴到页面里
 
+![](images/github-key.png)
+
+![](images/add-ssh-key.png)
+
 
 然后在命令行执行如下指令下载部署用项目，项目有点大，稍微等一段时间
 
 	meteor@ubuntu:~$ git clone git@github.com:wmzhai/setup-meteor-machine.git
+
+![](images/clone-this.png)
+
 
 6. 安装phantomjs
 -------
@@ -120,6 +122,9 @@ https://github.com/settings/ssh
 
 执行完毕成功了会显示版本号1.9.8
 
+![](images/install-phantomjs.png)
+
+
 7. 安装nodejs
 -------
 
@@ -129,6 +134,7 @@ https://github.com/settings/ssh
 
 执行完毕成功了会nodejs和npm的版本号
 
+![](images/install-nodejs.png)
 
 8. 安装mongodb v3
 -------
@@ -139,6 +145,8 @@ https://github.com/settings/ssh
 
 这一步需要从网上下载文件，需要等一段时间，安装完毕以后输入如下指令验证，一切正常的话会进入mongodb的shell
 
+![](images/install-mongodb.png)
+
 
 9. 安装meteor
 -------
@@ -147,29 +155,28 @@ https://github.com/settings/ssh
 
 	meteor@ubuntu:~$ curl https://install.meteor.com/ | sh
 
-
+![](images/install-meteor.png)
 
 	meteor@ubuntu:~$ meteor create hello
 	meteor@ubuntu:~$ cd hello
 	meteor@ubuntu:~$ meteor 
 
-
-
-
+![](images/hello-meteor.png)
 
 用浏览器进入http://localhost:3000/ 验证项目正常运行
 
-
+![](images/launching-meteor.png)
 
 
 
 10. 安装mup
 -------
 
-
 Ctrl-C退出服务器运行
 
 	meteor@ubuntu:~/hello$ sudo npm install -g mup
+
+![](images/install-mup.png)
 
 
 11. mup init
@@ -179,7 +186,7 @@ Ctrl-C退出服务器运行
 
 	meteor@ubuntu:~/hello$ mup init
 
-
+![](images/mup-init.png)
 
 然后编辑mup.json如下
 
@@ -229,20 +236,23 @@ Ctrl-C退出服务器运行
 
 	meteor@ubuntu:~/hello$ mup setup
 
-
+![](images/mup-setup.png)
 
 13. mup deploy部署
 -------
 
 	meteor@ubuntu:~/hello$ mup deploy
 
+![](images/mup-deploy.png)
 
 项目是被安装到/opt/hello目录下，可以切换目录进去看看
 
+![](images/deploy-dir.png)
 
 14. 浏览部署结果
 -------
 
 最后在浏览器里面打开http://localhost验证是否部署正常
 
+![](images/deploy-hello.png)
 
