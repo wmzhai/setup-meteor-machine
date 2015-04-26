@@ -85,29 +85,13 @@
 
 
 
-5. 配置GitHub账户，并clone本项目
+5. clone本项目
 -------
-
-首先登陆github，再进入如下界面
-https://github.com/settings/ssh
-
-点击右上角的Add SSH key
-
-
-然后执行
-
-	meteor@ubuntu:~$ gedit .ssh/id_rsa.pub
-
-复制所有内容，黏贴到页面里
-
-![](images/github-key.png)
-
-![](images/add-ssh-key.png)
 
 
 然后在命令行执行如下指令下载部署用项目，项目有点大，稍微等一段时间
 
-	meteor@ubuntu:~$ git clone git@github.com:wmzhai/setup-meteor-machine.git
+	meteor@ubuntu:~$ git clone https://github.com/wmzhai/setup-meteor-machine.git
 
 ![](images/clone-this.png)
 
