@@ -1,9 +1,13 @@
 # Meteor环境安装指南
 
-本指南配置完毕以后可以通过 mup deploy在本机实现meteor部署。
 
-基于国内开发者被墙的现状，已经将nodejs和phantomjs两个package提前下载放到script目录下，clone有点慢。
+本指南主要针对采用Ubuntu开发meteor，并且需要在本地实现部署的用户，配置完毕以后可以通过 mup deploy在本机实现meteor部署。 对于哪些希望在国内服务器上部署的开发者，本文也具备参考意义。 
 
+如果是仅需本地开发的用户(包括Ubuntu用户和Mac用户)可以执行官方指令
+
+	curl https://install.meteor.com/ | sh
+
+特别说明：基于国内开发者被墙的现状，已经将nodejs和phantomjs两个package提前下载放到script目录下，clone有点慢。
 
 1. 安装配置Ubuntu14.04
 -------
