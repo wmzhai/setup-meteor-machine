@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Meteor开发环境指南 by wmzhai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Meteor开发环境指南</h1>
+      <h2 class="project-tagline">Ubuntu版</h2>
+      <a href="https://github.com/wmzhai/setup-meteor-machine" class="btn">View on GitHub</a>
+      <a href="https://github.com/wmzhai/setup-meteor-machine/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/wmzhai/setup-meteor-machine/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="meteor环境安装指南" class="anchor" href="#meteor%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Meteor环境安装指南</h1>
+
+<p>本指南主要针对采用Ubuntu开发meteor，并且需要在本地实现部署的用户，配置完毕以后可以通过 mup deploy在本机实现meteor部署。 对于哪些希望在国内服务器上部署的开发者，本文也具备参考意义。 </p>
+
+<p>如果是仅需本地开发的用户(包括Ubuntu用户和Mac用户)可以执行官方指令</p>
+
+<pre><code>curl https://install.meteor.com/ | sh
+</code></pre>
+
+<p>特别说明：基于国内开发者被墙的现状，已经将nodejs和phantomjs两个package提前下载放到script目录下，clone有点慢。</p>
+
+<h2>
+<a id="1-安装配置ubuntu1404" class="anchor" href="#1-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEubuntu1404" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. 安装配置Ubuntu14.04</h2>
+
+<p>首先安装Ubuntu主机，我们推荐采用虚拟机开发，我们在Vmware里安装Ubuntu14.04，用户名是meteor</p>
+
+<p>注意，安装时需要下载的文件尽量skip掉，安装完毕以后可以在比较快的镜像里面下载</p>
+
+<h2>
+<a id="2-启用root用户" class="anchor" href="#2-%E5%90%AF%E7%94%A8root%E7%94%A8%E6%88%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. 启用root用户</h2>
+
+<p>可以通过设置root密码的方式来启用root用户</p>
+
+<pre><code>$ sudo passwd root
+</code></pre>
+
+<p>设置完以后可以试一下su指令，进入root模式，后面很多操作采用root操作</p>
+
+<p><img src="images/add-root.png" alt=""></p>
+
+<h2>
+<a id="3-配置源并更新" class="anchor" href="#3-%E9%85%8D%E7%BD%AE%E6%BA%90%E5%B9%B6%E6%9B%B4%E6%96%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. 配置源并更新</h2>
+
+<p>安装以后通过编辑/etc/apt/sources.list配置源</p>
+
+<pre><code>meteor@ubuntu:~$ sudo gedit /etc/apt/sources.list
+</code></pre>
+
+<p>对于清华校内的用户，可以采用tuna的源，可以节省对外流量</p>
+
+<pre><code>deb http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty main restricted universe multiverse
+deb http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-security main restricted universe multiverse
+deb http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-updates main restricted universe multiverse
+deb http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-proposed main restricted universe multiverse
+deb http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty main restricted universe multiverse
+deb-src http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-security main restricted universe multiverse
+deb-src http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-updates main restricted universe multiverse
+deb-src http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-proposed main restricted universe multiverse
+deb-src http://mirrors.i.tuna.tsinghua.edu.cn/ubuntu trusty-backports main restricted universe multiverse
+</code></pre>
+
+<p>对于北京公网用户而言，经测试，最快的ubuntu镜像是<a href="http://mirrors.yun-idc.com/ubuntu/%E7%9A%84%E9%95%9C%E5%83%8F">http://mirrors.yun-idc.com/ubuntu/的镜像</a></p>
+
+<pre><code>deb http://mirrors.yun-idc.com/ubuntu/ trusty main restricted universe multiverse
+deb http://mirrors.yun-idc.com/ubuntu/ trusty-security main restricted universe multiverse
+deb http://mirrors.yun-idc.com/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://mirrors.yun-idc.com/ubuntu/ trusty-proposed main restricted universe multiverse
+deb http://mirrors.yun-idc.com/ubuntu/ trusty-backports main restricted universe multiverse
+deb-src http://mirrors.yun-idc.com/ubuntu/ trusty main restricted universe multiverse
+deb-src http://mirrors.yun-idc.com/ubuntu/ trusty-security main restricted universe multiverse
+deb-src http://mirrors.yun-idc.com/ubuntu/ trusty-updates main restricted universe multiverse
+deb-src http://mirrors.yun-idc.com/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-src http://mirrors.yun-idc.com/ubuntu/ trusty-backports main restricted universe multiverse
+</code></pre>
+
+<p>随后执行更新指令</p>
+
+<pre><code>meteor@ubuntu:~$ sudo apt-get update -y 
+meteor@ubuntu:~$ sudo apt-get upgrade -y 
+</code></pre>
+
+<h2>
+<a id="4配置openssh和root的登录" class="anchor" href="#4%E9%85%8D%E7%BD%AEopenssh%E5%92%8Croot%E7%9A%84%E7%99%BB%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.配置openssh和root的登录</h2>
+
+<pre><code>meteor@ubuntu:~$ sudo apt-get install openssh-client openssh-server git -y
+meteor@ubuntu:~$ ssh-keygen -t rsa
+meteor@ubuntu:~$ su
+root@ubuntu:/home/meteor# cd
+root@ubuntu:~# mkdir .ssh
+root@ubuntu:~# cp /home/meteor/.ssh/id_rsa.pub /root/.ssh/authorized_keys 
+</code></pre>
+
+<p>安装openssh并生成sshkey，<br>
+然后再进入root用户的home，创建/root/.ssh/<br>
+最后将客户端的id_rsa.pub内容复制到 /root/.ssh/authorized_keys 内，以达到权限认证目的</p>
+
+<p><img src="images/ssh.png" alt=""></p>
+
+<p>然后再退出root用户，在重启ssh服务，最后使用root用户连接到本地的ssh里面</p>
+
+<p><img src="images/ssh-login.png" alt=""></p>
+
+<h2>
+<a id="5-配置github账户并clone本项目" class="anchor" href="#5-%E9%85%8D%E7%BD%AEgithub%E8%B4%A6%E6%88%B7%E5%B9%B6clone%E6%9C%AC%E9%A1%B9%E7%9B%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5. 配置GitHub账户，并clone本项目</h2>
+
+<p>首先登陆github，再进入如下界面
+<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a></p>
+
+<p>点击右上角的Add SSH key</p>
+
+<p>然后执行</p>
+
+<pre><code>meteor@ubuntu:~$ gedit .ssh/id_rsa.pub
+</code></pre>
+
+<p>复制所有内容，黏贴到页面里</p>
+
+<p><img src="images/github-key.png" alt=""></p>
+
+<p><img src="images/add-ssh-key.png" alt=""></p>
+
+<p>然后在命令行执行如下指令下载部署用项目，项目有点大，稍微等一段时间</p>
+
+<pre><code>meteor@ubuntu:~$ git clone git@github.com:wmzhai/setup-meteor-machine.git
+</code></pre>
+
+<p><img src="images/clone-this.png" alt=""></p>
+
+<h2>
+<a id="6-安装phantomjs" class="anchor" href="#6-%E5%AE%89%E8%A3%85phantomjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. 安装phantomjs</h2>
+
+<p>切换目录，执行如下脚本</p>
+
+<pre><code>meteor@ubuntu:~/setup-meteor-machine/scripts$ cd ~/setup-meteor-machine/scripts
+meteor@ubuntu:~/setup-meteor-machine/scripts$ ./install-phantomjs.sh
+</code></pre>
+
+<p>执行完毕成功了会显示版本号1.9.8</p>
+
+<p><img src="images/install-phantomjs.png" alt=""></p>
+
+<h2>
+<a id="7-安装nodejs" class="anchor" href="#7-%E5%AE%89%E8%A3%85nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. 安装nodejs</h2>
+
+<p>执行如下脚本</p>
+
+<pre><code>meteor@ubuntu:~/setup-meteor-machine/scripts$ ./install-node.sh 
+</code></pre>
+
+<p>执行完毕成功了会nodejs和npm的版本号</p>
+
+<p><img src="images/install-nodejs.png" alt=""></p>
+
+<h2>
+<a id="8-安装mongodb-v3" class="anchor" href="#8-%E5%AE%89%E8%A3%85mongodb-v3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>8. 安装mongodb v3</h2>
+
+<p>确保网络畅通，执行如下脚本 </p>
+
+<pre><code>meteor@ubuntu:~/setup-meteor-machine/scripts$ ./install-mongodb.sh
+</code></pre>
+
+<p>这一步需要从网上下载文件，需要等一段时间，安装完毕以后输入如下指令验证，一切正常的话会进入mongodb的shell</p>
+
+<p><img src="images/install-mongodb.png" alt=""></p>
+
+<h2>
+<a id="9-安装meteor" class="anchor" href="#9-%E5%AE%89%E8%A3%85meteor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>9. 安装meteor</h2>
+
+<p>切换回home路径，执行如下指令安装meteor并新建项目运行</p>
+
+<pre><code>meteor@ubuntu:~$ curl https://install.meteor.com/ | sh
+</code></pre>
+
+<p><img src="images/install-meteor.png" alt=""></p>
+
+<pre><code>meteor@ubuntu:~$ meteor create hello
+meteor@ubuntu:~$ cd hello
+meteor@ubuntu:~$ meteor 
+</code></pre>
+
+<p><img src="images/hello-meteor.png" alt=""></p>
+
+<p>用浏览器进入http://localhost:3000/ 验证项目正常运行</p>
+
+<p><img src="images/launching-meteor.png" alt=""></p>
+
+<h2>
+<a id="10-安装mup" class="anchor" href="#10-%E5%AE%89%E8%A3%85mup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>10. 安装mup</h2>
+
+<p>Ctrl-C退出服务器运行</p>
+
+<pre><code>meteor@ubuntu:~/hello$ sudo npm install -g mup
+</code></pre>
+
+<p><img src="images/install-mup.png" alt=""></p>
+
+<h2>
+<a id="11-mup-init" class="anchor" href="#11-mup-init" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>11. mup init</h2>
+
+<p>执行mup init生成配置文件</p>
+
+<pre><code>meteor@ubuntu:~/hello$ mup init
+</code></pre>
+
+<p><img src="images/mup-init.png" alt=""></p>
+
+<p>然后编辑mup.json如下</p>
+
+<pre><code>{
+  // Server authentication info
+  "servers": [
+    {
+      "host": "localhost",
+      "username": "root",
+      "pem": "~/.ssh/id_rsa"
+    }
+  ],
+
+  // Install MongoDB in the server, does not destroy local MongoDB on future setup
+  "setupMongo": false,
+
+  // WARNING: Node.js is required! Only skip if you already have Node.js installed on server.
+  "setupNode": false,
+
+  // WARNING: If nodeVersion omitted will setup 0.10.36 by default. Do not use v, only version number.
+  "nodeVersion": "0.10.36",
+
+  // Install PhantomJS in the server
+  "setupPhantom": false,
+
+  // Application name (No spaces)
+  "appName": "hello",
+
+  // Location of app (local directory)
+  "app": ".",
+
+  // Configure environment
+  "env": {
+    "ROOT_URL": "http://localhost"
+  },
+
+  // Meteor Up checks if the app comes online just after the deployment
+  // before mup checks that, it will wait for no. of seconds configured below
+  "deployCheckWaitTime": 15
+}
+</code></pre>
+
+<h2>
+<a id="12-mup-setup安装环境" class="anchor" href="#12-mup-setup%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>12. mup setup安装环境</h2>
+
+<p>再执行mup setup，这个步骤有点久，需要等一段时间</p>
+
+<pre><code>meteor@ubuntu:~/hello$ mup setup
+</code></pre>
+
+<p><img src="images/mup-setup.png" alt=""></p>
+
+<h2>
+<a id="13-mup-deploy部署" class="anchor" href="#13-mup-deploy%E9%83%A8%E7%BD%B2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>13. mup deploy部署</h2>
+
+<pre><code>meteor@ubuntu:~/hello$ mup deploy
+</code></pre>
+
+<p><img src="images/mup-deploy.png" alt=""></p>
+
+<p>项目是被安装到/opt/hello目录下，可以切换目录进去看看</p>
+
+<p><img src="images/deploy-dir.png" alt=""></p>
+
+<h2>
+<a id="14-浏览部署结果" class="anchor" href="#14-%E6%B5%8F%E8%A7%88%E9%83%A8%E7%BD%B2%E7%BB%93%E6%9E%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>14. 浏览部署结果</h2>
+
+<p>最后在浏览器里面打开http://localhost验证是否部署正常</p>
+
+<p><img src="images/deploy-hello.png" alt=""></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/wmzhai/setup-meteor-machine">Meteor开发环境指南</a> is maintained by <a href="https://github.com/wmzhai">wmzhai</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
